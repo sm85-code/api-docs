@@ -259,7 +259,8 @@ describe("LogisticsManager (Generated Tests)", () => {
   describe("createShippingDocumentJob", () => {
     it("should correctly validate request and response formats", async () => {
       const exampleRequest = {
-        shipping_document_type: "THERMAL_UNPACKAGED_LABEL",
+        shipping_document_type:
+          "NORMAL_AIR_WAYBILL, THERMAL_AIR_WAYBILL, NORMAL_JOB_AIR_WAYBILL, THERMAL_JOB_AIR_WAYBILL, THERMAL_UNPACKAGED_LABEL",
         unpackaged_sku_requests: [
           {
             unpackaged_sku_id: "844091087_11192347",
@@ -267,6 +268,7 @@ describe("LogisticsManager (Generated Tests)", () => {
           },
         ],
         package_list: ["test_string"],
+        booking_sn: ["test_string"],
       };
       const exampleResponse = {
         job_id: "SDK0001_a86148a97a6e04ce2ed468968de344b7",
