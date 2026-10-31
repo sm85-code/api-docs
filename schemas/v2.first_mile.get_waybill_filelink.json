@@ -1,6 +1,6 @@
 {
-  "api_id": 3360,
-  "api_name": "v2.buybox.get_buybox_model_performance",
+  "api_id": 3403,
+  "api_name": "v2.first_mile.get_waybill_filelink",
   "api_type": "Shop",
   "common_params": [
     {
@@ -35,13 +35,16 @@
     }
   ],
   "define": {
-    "content": "<p>Get Buybox model performance by model IDs for the authorized shop.</p>",
+    "content": "<p><span style=\"color:rgb(51,51,51);\">Use this api to get first mile waybill file link.</span></p>",
     "raw_content": [
       {
         "name": "paragraph",
         "children": [
           {
-            "data": "Get Buybox model performance by model IDs for the authorized shop."
+            "attributes": {
+              "fontColor": "rgb(51,51,51)"
+            },
+            "data": "Use this api to get first mile waybill file link."
           }
         ]
       }
@@ -49,33 +52,63 @@
   },
   "error_list": [
     {
-      "name": "buybox_duplicate_model_id",
-      "description": "The model ID list contains duplicate values. Remove the duplicate model IDs and try again.",
+      "name": "firstmile.error_network",
+      "description": "Get waybill fail due to the network error.",
       "solution": null
     },
     {
-      "name": "buybox_invalid_model_id",
-      "description": "The model ID is invalid. Provide a valid positive model ID.",
+      "name": "error_not_found",
+      "description": "Wrong parameters, detail: {msg}.",
       "solution": null
     },
     {
-      "name": "buybox_invalid_model_id_list",
-      "description": "The model ID list is invalid. Provide a valid list of positive model IDs.",
+      "name": "error_param",
+      "description": "Wrong parameters, detail: {msg}.",
       "solution": null
     },
     {
-      "name": "buybox_model_not_found",
-      "description": "The model was not found under the authorized shop. Check the model ID and try again.",
+      "name": "error_permission",
+      "description": "Sorry you don't have the permission, detail: {msg}.",
       "solution": null
     },
     {
-      "name": "buybox_performance_unavailable",
-      "description": "Buybox performance data is temporarily unavailable. Try again later.",
+      "name": "firstmile.error_param",
+      "description": "The ShopID and Pickup Label are not matched.",
       "solution": null
     },
     {
-      "name": "buybox_system_error",
-      "description": "An unexpected system error occurred. Try again later.",
+      "name": "error_network",
+      "description": "Inner http call failed",
+      "solution": null
+    },
+    {
+      "name": "error_data",
+      "description": "parse data failed",
+      "solution": null
+    },
+    {
+      "name": "error_data",
+      "description": "data not exist",
+      "solution": null
+    },
+    {
+      "name": "error_server",
+      "description": "Something wrong. Please try later.",
+      "solution": null
+    },
+    {
+      "name": "error_param",
+      "description": "The information you queried is not found.",
+      "solution": null
+    },
+    {
+      "name": "error_shop",
+      "description": "shopid is invalid",
+      "solution": null
+    },
+    {
+      "name": "error_param",
+      "description": "request not from gateway",
       "solution": null
     }
   ],
@@ -260,146 +293,82 @@
   "gateway_api_id": 0,
   "is_get_method": 0,
   "method": 1,
-  "module_id": 140,
-  "module_name": "Buybox",
+  "module_id": 96,
+  "module_name": "FirstMile",
   "params": {
     "request_params": [
       {
-        "description": "",
-        "name": "model_id_list",
+        "description": "<p>The first mile tracking number that you want to print waybill.limit [1, 50]</p>",
+        "name": "first_mile_tracking_number_list",
         "sample": [
-          600000,
-          600001
+          "CNF880344919515201212"
         ],
-        "type": "int64[]",
+        "type": "string[]",
         "required": "True",
-        "key": "dFzzmt"
+        "key": "GmNeMbD"
       }
     ],
     "response_params": [
       {
-        "name": "error",
+        "name": "file_link",
         "type": "string",
-        "sample": "error_param",
-        "description": "",
-        "key": "sGzMXcS"
-      },
-      {
-        "description": "",
-        "name": "message",
-        "sample": "Invalid request parameters.",
-        "type": "string",
-        "required": null,
-        "key": "DhRHijB"
-      },
-      {
-        "description": "",
-        "name": "request_id",
-        "sample": "b6b2c7a0f4d84f7f9a3f58c0d2e2f031",
-        "type": "string",
-        "required": null,
-        "key": "xfRnRfa"
-      },
-      {
-        "description": "",
-        "name": "response",
-        "sample": "",
-        "type": "object",
-        "required": null,
-        "key": "ftiFDka",
-        "children": [
-          {
-            "description": "",
-            "name": "performance_list",
-            "sample": "",
-            "type": "object[]",
-            "required": null,
-            "key": "EtaXkAG",
-            "children": [
-              {
-                "description": "",
-                "name": "model_id",
-                "sample": "600000",
-                "type": "int64",
-                "required": null,
-                "key": "zYGXGXN"
-              },
-              {
-                "description": "",
-                "name": "past_7_days_sold_count",
-                "sample": "100",
-                "type": "int64",
-                "required": null,
-                "key": "CxRtWeC"
-              }
-            ]
-          },
-          {
-            "description": "",
-            "name": "data_updated_time",
-            "sample": "2026-01-19",
-            "type": "string",
-            "required": null,
-            "key": "bJfMxXW"
-          }
-        ]
+        "sample": "https://sfile-origin.sp-cdn.susercontent.com/sd-sg-1/global-0001_4325667--normal_pdf_shipping_label.pdf",
+        "description": "<p>The download link to the waybill file. The link will be valid for 30 minutes.</p>",
+        "key": "FFrHyHx"
       }
     ]
   },
-  "perm_mtime": 1789627812,
-  "perm_operator": "guanlin.ma@shopee.com",
+  "perm_mtime": 1793333871,
+  "perm_operator": "junji.yao@shopee.com",
   "perm_type": 1,
   "perm_upload_file_name": "",
-  "priority": 80740,
+  "priority": 80751,
   "rate_limit": "",
-  "request_sample": [],
+  "request_sample": [
+    {
+      "type": "Payload",
+      "value": {
+        "first_mile_tracking_number_list": [
+          "CNF880344919515201212"
+        ]
+      }
+    }
+  ],
   "response_sample": [
     {
       "type": "JSON",
       "value": {
-        "error": "error_param",
-        "message": "Invalid request parameters.",
-        "request_id": "b6b2c7a0f4d84f7f9a3f58c0d2e2f031",
-        "response": {
-          "performance_list": [
-            {
-              "model_id": 600000,
-              "past_7_days_sold_count": 100
-            }
-          ],
-          "data_updated_time": "2026-01-19"
-        }
+        "file_link": "https://sfile-origin.sp-cdn.susercontent.com/sd-sg-1/global-0001_4325667--normal_pdf_shipping_label.pdf"
       }
     }
   ],
   "status": 1,
   "tag": "",
-  "test_url": "https://partner.test-stable.shopeemobile.com/api/v2/buybox/get_buybox_model_performance",
+  "test_url": "https://partner.test-stable.shopeemobile.com/api/v2/first_mile/get_waybill_filelink",
   "update_log_list": [
     {
-      "date": "-",
+      "date": "2026-10-23",
       "content": "New API"
     }
   ],
-  "url": "https://partner.shopeemobile.com/api/v2/buybox/get_buybox_model_performance",
+  "url": "https://partner.shopeemobile.com/api/v2/first_mile/get_waybill_filelink",
   "version": "",
   "error_example": [
     {
       "type": "JSON",
       "value": {
         "error": "error_param",
-        "message": "Invalid request parameters.",
-        "response": {},
-        "request_id": "b6b2c7a0f4d84f7f9a3f58c0d2e2f031"
+        "message": "Wrong parameters, detail: field first_mile_tracking_number_list type error.",
+        "request_id": "b21ea305009a49fd39fbbf5ea26e46af"
       }
     }
   ],
   "api_permission": [
     "ERP System",
     "Seller In House System",
-    "Product Management"
+    "Order Management"
   ],
-  "path": "/api/v2/buybox/get_buybox_model_performance",
+  "path": "/api/v2/first_mile/get_waybill_filelink",
   "related_documents": {
     "developer_guides": [],
     "faqs": []

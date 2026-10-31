@@ -1602,6 +1602,7 @@ describe("ProductManager (Generated Tests)", () => {
             item_status: "NORMAL",
             deboost: false,
             has_model: false,
+            default_model_id: 123,
             has_promotion: true,
             video_info: [
               {
@@ -1617,6 +1618,7 @@ describe("ProductManager (Generated Tests)", () => {
             item_dangerous: 0,
             gtin_code: "test_string",
             size_chart_id: 123,
+            medicine_id: 123,
             promotion_image: {
               image_id_list: ["test_string"],
               image_url_list: ["test_string"],
@@ -1645,7 +1647,6 @@ describe("ProductManager (Generated Tests)", () => {
                 purchase_limit: 123,
               },
             },
-            medicine_id: 123,
             certification_info: {
               certification_list: [
                 {

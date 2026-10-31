@@ -259,7 +259,8 @@ describe("LogisticsManager (Generated Tests)", () => {
   describe("createShippingDocumentJob", () => {
     it("should correctly validate request and response formats", async () => {
       const exampleRequest = {
-        shipping_document_type: "THERMAL_UNPACKAGED_LABEL",
+        shipping_document_type:
+          "NORMAL_AIR_WAYBILL, THERMAL_AIR_WAYBILL, NORMAL_JOB_AIR_WAYBILL, THERMAL_JOB_AIR_WAYBILL, THERMAL_UNPACKAGED_LABEL",
         unpackaged_sku_requests: [
           {
             unpackaged_sku_id: "844091087_11192347",
@@ -267,6 +268,7 @@ describe("LogisticsManager (Generated Tests)", () => {
           },
         ],
         package_list: ["test_string"],
+        booking_sn: ["test_string"],
       };
       const exampleResponse = {
         job_id: "SDK0001_a86148a97a6e04ce2ed468968de344b7",
@@ -479,6 +481,39 @@ describe("LogisticsManager (Generated Tests)", () => {
     });
   });
 
+  describe("downloadShippingDocumentJobFilelink", () => {
+    it("should correctly validate request and response formats", async () => {
+      const exampleRequest = {
+        job_id: "SDK0001_a86148a97a6e04ce2ed468968de344b7",
+      };
+      const exampleResponse = {
+        file_link:
+          "https://sfile-origin.sp-cdn.susercontent.com/sd-sg-1/global-0001_4325667--normal_pdf_shipping_label.pdf",
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        request_id: "test-request-id",
+        error: "",
+        message: "",
+        response: exampleResponse,
+      });
+
+      const result = await manager.downloadShippingDocumentJobFilelink(exampleRequest);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        mockConfig,
+        "/logistics/download_shipping_document_job_filelink",
+        expect.objectContaining({
+          method: "POST",
+          auth: true,
+          body: expect.objectContaining(exampleRequest),
+        })
+      );
+
+      expect(result.response).toEqual(exampleResponse);
+    });
+  });
+
   describe("downloadToLabel", () => {
     it("should correctly validate request and response formats", async () => {
       const exampleRequest = {
@@ -501,6 +536,40 @@ describe("LogisticsManager (Generated Tests)", () => {
       expect(mockFetch).toHaveBeenCalledWith(
         mockConfig,
         "/logistics/download_to_label",
+        expect.objectContaining({
+          method: "POST",
+          auth: true,
+          body: expect.objectContaining(exampleRequest),
+        })
+      );
+
+      expect(result.response).toEqual(exampleResponse);
+    });
+  });
+
+  describe("downloadToLabelFilelink", () => {
+    it("should correctly validate request and response formats", async () => {
+      const exampleRequest = {
+        sorting_group: 1,
+        quantity: 1,
+      };
+      const exampleResponse = {
+        file_link:
+          "https://sfile-origin.sp-cdn.susercontent.com/sd-sg-1/global-0001_4325667--normal_pdf_shipping_label.pdf",
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        request_id: "test-request-id",
+        error: "",
+        message: "",
+        response: exampleResponse,
+      });
+
+      const result = await manager.downloadToLabelFilelink(exampleRequest);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        mockConfig,
+        "/logistics/download_to_label_filelink",
         expect.objectContaining({
           method: "POST",
           auth: true,
@@ -1523,6 +1592,13 @@ describe("LogisticsManager (Generated Tests)", () => {
               end_time: "18:30",
             },
           },
+          instant_order_cutoff_time_buffer_list: [
+            {
+              id: "instant_prio",
+              display_name: "Instant  Prio",
+              buffer: 60,
+            },
+          ],
         },
       };
 

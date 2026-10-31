@@ -466,17 +466,21 @@ export interface CreateShippingDocumentJobUnpackagedSkuRequest {
  */
 export interface CreateShippingDocumentJobRequest {
   /**
-   * The type of shipping document. Available values: THERMAL_UNPACKAGED_LABEL
+   * The type of shipping document. Available values: NORMAL_AIR_WAYBILL, THERMAL_AIR_WAYBILL, NORMAL_JOB_AIR_WAYBILL, THERMAL_JOB_AIR_WAYBILL, THERMAL_UNPACKAGED_LABEL
    */
-  shipping_document_type: string;
+  shipping_document_type: ShippingDocumentType | string | number;
   /**
-   * List of Unpackaged SKUs to generate labels for.Note: The unpackaged_sku_requests and package_list cannot be populated at the same time, please select one.
+   * List of Unpackaged SKUs to generate labels for.Note: The unpackaged_sku_requests, package_list, and booking_sn cannot be populated at the same time, please select one.
    */
   unpackaged_sku_requests?: CreateShippingDocumentJobUnpackagedSkuRequest[];
   /**
-   * List of Package Numbers to generate labels for. (maximum 600 total)Note: The unpackaged_sku_requests and package_list cannot be populated at the same time, please select one.
+   * List of Package Numbers to generate labels for. (maximum 600 total)Note: The unpackaged_sku_requests, package_list, and booking_sn cannot be populated at the same time, please select one.
    */
   package_list?: string[];
+  /**
+   * List of Booking SN to generate labels for. (maximum 600 total)Note: The unpackaged_sku_requests, package_list, and booking_sn cannot be populated at the same time, please select one.
+   */
+  booking_sn?: string[];
 }
 /**
  * CreateShippingDocumentJobFail sub-interface for CreateShippingDocumentJobResponseData
@@ -504,7 +508,7 @@ export interface CreateShippingDocumentJobResponseData {
    */
   job_id?: string;
   /**
-   * List of Package Number or Unpackaged SKU ID that succeeds in generating Shipping Document
+   * List of Package Number, Unpackaged SKU ID, or Booking SN that succeeds in generating Shipping Document
    */
   success_id_list?: string[];
   /**
@@ -670,6 +674,33 @@ export interface DownloadShippingDocumentJobResponseData {
 export type DownloadShippingDocumentJobResponse =
   FetchResponse<DownloadShippingDocumentJobResponseData>;
 /**
+ * Request parameters for download_shipping_document_job_filelink
+ *
+ * This API allows users to download the shipping document associated with a specific job ID. It checks the job status before proceeding with the download. The response will contain a link that can be used to download the shipping document.
+ */
+export interface DownloadShippingDocumentJobFilelinkRequest {
+  /**
+   * Generated Job ID for status tracking and download the Shipping Document
+   */
+  job_id: string;
+}
+/**
+ * Response data payload for download_shipping_document_job_filelink
+ */
+export interface DownloadShippingDocumentJobFilelinkResponseData {
+  /**
+   * The link to download the shipping document. The link will be valid for 30 minutes.
+   */
+  file_link?: string;
+}
+/**
+ * Response payload for download_shipping_document_job_filelink
+ *
+ * This API allows users to download the shipping document associated with a specific job ID. It checks the job status before proceeding with the download. The response will contain a link that can be used to download the shipping document.
+ */
+export type DownloadShippingDocumentJobFilelinkResponse =
+  FetchResponse<DownloadShippingDocumentJobFilelinkResponseData>;
+/**
  * Request parameters for download_to_label
  *
  * Use the API to download the TO label that should be attached to the carton before drop-off at the warehouse (Only for TW channel_id:30029).
@@ -680,7 +711,7 @@ export interface DownloadToLabelRequest {
    */
   sorting_group: number;
   /**
-   * Specifies the TO quantity, up to a maximum of 20 per request. If not specified, the default value is 1
+   * Specifies the TO quantity, up to a maximum of 100 per request. If not specified, the default value is 1
    */
   quantity?: number;
 }
@@ -699,6 +730,36 @@ export interface DownloadToLabelResponseData {
  * Use the API to download the TO label that should be attached to the carton before drop-off at the warehouse (Only for TW channel_id:30029).
  */
 export type DownloadToLabelResponse = FetchResponse<DownloadToLabelResponseData>;
+/**
+ * Request parameters for download_to_label_filelink
+ *
+ * Use the API to download the TO label that should be attached to the carton before drop-off at the warehouse (Only for TW channel_id:30029). This API will return file link instead of blob.
+ */
+export interface DownloadToLabelFilelinkRequest {
+  /**
+   * Sorting Group of the TO. Available value:1:North2:South
+   */
+  sorting_group: number;
+  /**
+   * Specifies the TO quantity, up to a maximum of 100 per request. If not specified, the default value is 1
+   */
+  quantity?: number;
+}
+/**
+ * Response data payload for download_to_label_filelink
+ */
+export interface DownloadToLabelFilelinkResponseData {
+  /**
+   * The download link to the waybill file. The link will be valid for 30 minutes.
+   */
+  file_link?: string;
+}
+/**
+ * Response payload for download_to_label_filelink
+ *
+ * Use the API to download the TO label that should be attached to the carton before drop-off at the warehouse (Only for TW channel_id:30029). This API will return file link instead of blob.
+ */
+export type DownloadToLabelFilelinkResponse = FetchResponse<DownloadToLabelFilelinkResponseData>;
 /**
  * Request parameters for get_address_list
  *
@@ -2377,7 +2438,7 @@ export type GetOperatingHourRestrictionsResponse =
 /**
  * Request parameters for get_operating_hours
  *
- * This API is utilized to retrieve the existing operating hours of sellers including Pickup Operating Hours,  Special Hours, Instant Operating Hours, and Shop Collection Operating Hours.
+ * This API is utilized to retrieve the existing operating hours of sellers including Pickup Operating Hours, Special Hours, Instant Operating Hours, and Shop Collection Operating Hours.
  */
 export type GetOperatingHoursRequest = Record<string, never>;
 /**
@@ -2635,6 +2696,23 @@ export interface GetOperatingHoursShopCollectionOperatingHour {
   public_holiday?: GetOperatingHoursPublicHoliday;
 }
 /**
+ * GetOperatingHoursInstantOrderCutoffTimeBuffer sub-interface for GetOperatingHoursRepsonse
+ */
+export interface GetOperatingHoursInstantOrderCutoffTimeBuffer {
+  /**
+   * Unique identifier for a buffer group.
+   */
+  id?: string;
+  /**
+   * Display name for a buffer group.
+   */
+  display_name?: string;
+  /**
+   * Cutoff time, in minutes before the end of the shop's instant operating hour, after which new orders are no longer fulfilled on the same day for the given buffer group.
+   */
+  buffer?: number;
+}
+/**
  * GetOperatingHoursRepsonse sub-interface for GetOperatingHoursResponse
  */
 export interface GetOperatingHoursRepsonse {
@@ -2654,6 +2732,7 @@ export interface GetOperatingHoursRepsonse {
    * The details of Shop Collection Operating Hours
    */
   shop_collection_operating_hour?: GetOperatingHoursShopCollectionOperatingHour;
+  instant_order_cutoff_time_buffer_list?: GetOperatingHoursInstantOrderCutoffTimeBuffer[];
 }
 /**
  * Response data payload for get_operating_hours
@@ -2664,7 +2743,7 @@ export interface GetOperatingHoursResponseData {
 /**
  * Response payload for get_operating_hours
  *
- * This API is utilized to retrieve the existing operating hours of sellers including Pickup Operating Hours,  Special Hours, Instant Operating Hours, and Shop Collection Operating Hours.
+ * This API is utilized to retrieve the existing operating hours of sellers including Pickup Operating Hours, Special Hours, Instant Operating Hours, and Shop Collection Operating Hours.
  */
 export type GetOperatingHoursResponse = FetchResponse<GetOperatingHoursResponseData>;
 /**
@@ -4930,7 +5009,7 @@ export type UpdateTrackingStatusResponse = FetchResponse<UpdateTrackingStatusRes
 /**
  * Request parameters for upload_serviceable_polygon
  *
- * Only available for Brazil sellers. Use this API to upload KML file for shop level serviceability setting for BR Entrega Turbo channel (Channel ID: 90026). Please note that multiple Outlet Shops under the same Mart Shop cannot have overlapping service areas.
+ * Only available for Brazil sellers. Use this API to upload KML file for shop level serviceability setting for BR Entrega Turbo channel (Channel ID: 90026). Please note that multiple Outlet Shops under the same Mart Shop can have overlapping service areas.
  */
 export interface UploadServiceablePolygonRequest {
   /**
@@ -4950,6 +5029,6 @@ export interface UploadServiceablePolygonResponseData {
 /**
  * Response payload for upload_serviceable_polygon
  *
- * Only available for Brazil sellers. Use this API to upload KML file for shop level serviceability setting for BR Entrega Turbo channel (Channel ID: 90026). Please note that multiple Outlet Shops under the same Mart Shop cannot have overlapping service areas.
+ * Only available for Brazil sellers. Use this API to upload KML file for shop level serviceability setting for BR Entrega Turbo channel (Channel ID: 90026). Please note that multiple Outlet Shops under the same Mart Shop can have overlapping service areas.
  */
 export type UploadServiceablePolygonResponse = FetchResponse<UploadServiceablePolygonResponseData>;

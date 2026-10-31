@@ -650,6 +650,14 @@
                     "type": "string",
                     "required": null,
                     "key": "fMbpCbx"
+                  },
+                  {
+                    "description": "<p>IMEI (International Mobile Equipment Identity) assigned to the item. Only for certain FBS shops.&nbsp; If item does not have IMEl or IMEl parcel is not yet outbound from warehouse, return empty.</p>",
+                    "name": "imei_list",
+                    "sample": "",
+                    "type": "string[]",
+                    "required": null,
+                    "key": "PBZeiWX"
                   }
                 ]
               },
@@ -1038,6 +1046,22 @@
                     "key": "EQJQGmX"
                   }
                 ]
+              },
+              {
+                "description": "<p>If the pickup time was last updated by seller or system. Not returned if not applicable.</p>",
+                "name": "latest_pickup_time_change_source",
+                "sample": "seller",
+                "type": "string",
+                "required": null,
+                "key": "wwYpeBX"
+              },
+              {
+                "description": "<p>The pickup start time for this package. Not returned if not applicable.</p>",
+                "name": "pickup_time",
+                "sample": "1772276400",
+                "type": "int64",
+                "required": null,
+                "key": "xpiWbSp"
               }
             ]
           }
@@ -1180,6 +1204,14 @@
   "test_url": "https://partner.test-stable.shopeemobile.com/api/v2/order/get_package_detail",
   "update_log_list": [
     {
+      "date": "2026-10-29",
+      "content": "Add latest_pickup_time_change_source and pickup_time as response parameter"
+    },
+    {
+      "date": "2026-10-22",
+      "content": "Add \"imei_list\" into \"item_list\" as response param"
+    },
+    {
       "date": "2026-08-27",
       "content": "Add \"is_fulfillment_mapping\"\"bundle_sku_id\"\"components\" as Response Parameter"
     },
@@ -1190,14 +1222,6 @@
     {
       "date": "2026-06-17",
       "content": "Add some new prescription fields including \"is_prescription_item\",\"error_in_fetching_is_prescription_item\",\"prescription_check_status\",\"prescription_reject_reason\" into item list"
-    },
-    {
-      "date": "2026-05-22",
-      "content": "Add can_full_cancel_order, can_partial_cancel_order, buyer_preference_for_partial_cancellation response parameters"
-    },
-    {
-      "date": "2026-04-09",
-      "content": "Add new option for driver_status"
     }
   ],
   "url": "https://partner.shopeemobile.com/api/v2/order/get_package_detail",

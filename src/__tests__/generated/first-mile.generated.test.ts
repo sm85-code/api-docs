@@ -132,6 +132,44 @@ describe("FirstMileManager (Generated Tests)", () => {
     });
   });
 
+  describe("cancelCourierDeliveryFirstMileTrackingNumber", () => {
+    it("should correctly validate request and response formats", async () => {
+      const exampleRequest = {
+        binding_id: "DCN247547439397PU",
+      };
+      const exampleResponse = {
+        binding_id: "test_string",
+        unbinded_order_list: [
+          {
+            order_sn: "test_string",
+            package_number: "test_string",
+          },
+        ],
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        request_id: "test-request-id",
+        error: "",
+        message: "",
+        response: exampleResponse,
+      });
+
+      const result = await manager.cancelCourierDeliveryFirstMileTrackingNumber(exampleRequest);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        mockConfig,
+        "/first_mile/cancel_courier_delivery_first_mile_tracking_number",
+        expect.objectContaining({
+          method: "POST",
+          auth: true,
+          body: expect.objectContaining(exampleRequest),
+        })
+      );
+
+      expect(result.response).toEqual(exampleResponse);
+    });
+  });
+
   describe("generateAndBindFirstMileTrackingNumber", () => {
     it("should correctly validate request and response formats", async () => {
       const exampleRequest = {
@@ -279,6 +317,7 @@ describe("FirstMileManager (Generated Tests)", () => {
                 courier_name: "德邦快递",
                 courier_service_id: "LCN80001",
                 courier_service_name: "德邦快递",
+                courier_code: "JD",
               },
             ],
           },
@@ -361,6 +400,9 @@ describe("FirstMileManager (Generated Tests)", () => {
       const exampleRequest = {
         from_date: "2024-10-01",
         to_date: "2024-10-28",
+        time_range_type: "update_time",
+        from_timestamp: 1761696000,
+        to_timestamp: 1761782399,
         page_size: 10,
         cursor: '""',
       };
@@ -633,6 +675,39 @@ describe("FirstMileManager (Generated Tests)", () => {
       expect(mockFetch).toHaveBeenCalledWith(
         mockConfig,
         "/first_mile/get_waybill",
+        expect.objectContaining({
+          method: "POST",
+          auth: true,
+          body: expect.objectContaining(exampleRequest),
+        })
+      );
+
+      expect(result.response).toEqual(exampleResponse);
+    });
+  });
+
+  describe("getWaybillFilelink", () => {
+    it("should correctly validate request and response formats", async () => {
+      const exampleRequest = {
+        first_mile_tracking_number_list: ["CNF880344919515201212"],
+      };
+      const exampleResponse = {
+        file_link:
+          "https://sfile-origin.sp-cdn.susercontent.com/sd-sg-1/global-0001_4325667--normal_pdf_shipping_label.pdf",
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        request_id: "test-request-id",
+        error: "",
+        message: "",
+        response: exampleResponse,
+      });
+
+      const result = await manager.getWaybillFilelink(exampleRequest);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        mockConfig,
+        "/first_mile/get_waybill_filelink",
         expect.objectContaining({
           method: "POST",
           auth: true,

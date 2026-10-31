@@ -23,8 +23,12 @@ import {
   DownloadShippingDocumentResponse,
   DownloadShippingDocumentJobRequest,
   DownloadShippingDocumentJobResponse,
+  DownloadShippingDocumentJobFilelinkRequest,
+  DownloadShippingDocumentJobFilelinkResponse,
   DownloadToLabelRequest,
   DownloadToLabelResponse,
+  DownloadToLabelFilelinkRequest,
+  DownloadToLabelFilelinkResponse,
   GetAddressListRequest,
   GetAddressListResponse,
   GetBookingShippingDocumentDataInfoRequest,
@@ -303,6 +307,25 @@ export class LogisticsManager extends BaseManager {
     );
   }
   /**
+   * This API allows users to download the shipping document associated with a specific job ID. It checks the job status before proceeding with the download. The response will contain a link that can be used to download the shipping document.
+   *
+   * @param {DownloadShippingDocumentJobFilelinkRequest} params Request parameters
+   * @returns {Promise<DownloadShippingDocumentJobFilelinkResponse>} Promise resolving to the response
+   */
+  public async downloadShippingDocumentJobFilelink(
+    params?: DownloadShippingDocumentJobFilelinkRequest
+  ): Promise<DownloadShippingDocumentJobFilelinkResponse> {
+    return ShopeeFetch.fetch<DownloadShippingDocumentJobFilelinkResponse>(
+      this.config,
+      "/logistics/download_shipping_document_job_filelink",
+      {
+        method: "POST",
+        auth: true,
+        body: params,
+      }
+    );
+  }
+  /**
    * Use the API to download the TO label that should be attached to the carton before drop-off at the warehouse (Only for TW channel_id:30029).
    *
    * @param {DownloadToLabelRequest} params Request parameters
@@ -314,6 +337,25 @@ export class LogisticsManager extends BaseManager {
       auth: true,
       body: params,
     });
+  }
+  /**
+   * Use the API to download the TO label that should be attached to the carton before drop-off at the warehouse (Only for TW channel_id:30029). This API will return file link instead of blob.
+   *
+   * @param {DownloadToLabelFilelinkRequest} params Request parameters
+   * @returns {Promise<DownloadToLabelFilelinkResponse>} Promise resolving to the response
+   */
+  public async downloadToLabelFilelink(
+    params?: DownloadToLabelFilelinkRequest
+  ): Promise<DownloadToLabelFilelinkResponse> {
+    return ShopeeFetch.fetch<DownloadToLabelFilelinkResponse>(
+      this.config,
+      "/logistics/download_to_label_filelink",
+      {
+        method: "POST",
+        auth: true,
+        body: params,
+      }
+    );
   }
   /**
    * For integrated logistics channel, use this call to get pickup address for pickup mode order.
@@ -535,7 +577,7 @@ export class LogisticsManager extends BaseManager {
     );
   }
   /**
-   * This API is utilized to retrieve the existing operating hours of sellers including Pickup Operating Hours,  Special Hours, Instant Operating Hours, and Shop Collection Operating Hours.
+   * This API is utilized to retrieve the existing operating hours of sellers including Pickup Operating Hours, Special Hours, Instant Operating Hours, and Shop Collection Operating Hours.
    *
    * @param {GetOperatingHoursRequest} params Request parameters
    * @returns {Promise<GetOperatingHoursResponse>} Promise resolving to the response
@@ -890,7 +932,7 @@ export class LogisticsManager extends BaseManager {
     );
   }
   /**
-   * Only available for Brazil sellers. Use this API to upload KML file for shop level serviceability setting for BR Entrega Turbo channel (Channel ID: 90026). Please note that multiple Outlet Shops under the same Mart Shop cannot have overlapping service areas.
+   * Only available for Brazil sellers. Use this API to upload KML file for shop level serviceability setting for BR Entrega Turbo channel (Channel ID: 90026). Please note that multiple Outlet Shops under the same Mart Shop can have overlapping service areas.
    *
    * @param {UploadServiceablePolygonRequest} params Request parameters
    * @returns {Promise<UploadServiceablePolygonResponse>} Promise resolving to the response

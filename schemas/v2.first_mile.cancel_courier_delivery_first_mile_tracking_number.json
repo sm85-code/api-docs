@@ -1,6 +1,6 @@
 {
-  "api_id": 3357,
-  "api_name": "v2.buybox.get_buybox_models_by_shop_id",
+  "api_id": 3374,
+  "api_name": "v2.first_mile.cancel_courier_delivery_first_mile_tracking_number",
   "api_type": "Shop",
   "common_params": [
     {
@@ -35,13 +35,13 @@
     }
   ],
   "define": {
-    "content": "<p>Get the paginated Buybox model list for the authorized shop.</p>",
+    "content": "<p>Use this api to cancel first mile tracking number for courier delivery method.</p>",
     "raw_content": [
       {
         "name": "paragraph",
         "children": [
           {
-            "data": "Get the paginated Buybox model list for the authorized shop."
+            "data": "Use this api to cancel first mile tracking number for courier delivery method."
           }
         ]
       }
@@ -49,13 +49,43 @@
   },
   "error_list": [
     {
-      "name": "buybox_invalid_pagination",
-      "description": "The pagination parameters are invalid. Provide a non-negative offset and a valid limit.",
+      "name": "error_data",
+      "description": "parse data failed",
       "solution": null
     },
     {
-      "name": "buybox_system_error",
-      "description": "An unexpected system error occurred. Try again later.",
+      "name": "error_data",
+      "description": "data not exist",
+      "solution": null
+    },
+    {
+      "name": "error_param",
+      "description": "parameter invalid",
+      "solution": null
+    },
+    {
+      "name": "error_param",
+      "description": "The information you queried is not found.",
+      "solution": null
+    },
+    {
+      "name": "error_param",
+      "description": "Wrong parameters, detail: {msg}.",
+      "solution": null
+    },
+    {
+      "name": "error_server",
+      "description": "Something wrong. Please try later.\t",
+      "solution": null
+    },
+    {
+      "name": "error_shop",
+      "description": "shopid is invalid",
+      "solution": null
+    },
+    {
+      "name": "error_param",
+      "description": "request not from gateway",
       "solution": null
     }
   ],
@@ -240,51 +270,42 @@
   "gateway_api_id": 0,
   "is_get_method": 0,
   "method": 1,
-  "module_id": 140,
-  "module_name": "Buybox",
+  "module_id": 96,
+  "module_name": "FirstMile",
   "params": {
     "request_params": [
       {
-        "description": "<p>Pagination offset. Must be non-negative.</p>",
-        "name": "offset",
-        "sample": "0",
-        "type": "int32",
-        "required": "False",
-        "key": "PanfayR"
-      },
-      {
-        "description": "<p>Page size. Valid range is 1 to 250.</p>",
-        "name": "limit",
-        "sample": "100",
-        "type": "int32",
-        "required": "False",
-        "key": "SybpAQ"
+        "description": "",
+        "name": "binding_id",
+        "sample": "DCN247547439397PU",
+        "type": "string",
+        "required": "True",
+        "key": "EncbmFm"
       }
     ],
     "response_params": [
       {
-        "description": "",
         "name": "error",
-        "sample": "error_param",
         "type": "string",
-        "required": null,
-        "key": "isfSbpA"
+        "sample": "",
+        "description": "<p>Indicate error type if hit error. Empty if no error happened.</p>",
+        "key": "CkHYzFM"
       },
       {
-        "description": "",
+        "description": "<p>Indicate error details if hit error. Empty if no error happened.</p>",
         "name": "message",
-        "sample": "Invalid request parameters.",
+        "sample": "",
         "type": "string",
         "required": null,
-        "key": "yZFbzyE"
+        "key": "ZSkYdZb"
       },
       {
-        "description": "",
+        "description": "<p>The identifier for an API request for error tracking.</p>",
         "name": "request_id",
-        "sample": "b6b2c7a0f4d84f7f9a3f58c0d2e2f031",
+        "sample": "",
         "type": "string",
         "required": null,
-        "key": "ESjPkne"
+        "key": "cXePJK"
       },
       {
         "description": "",
@@ -292,166 +313,126 @@
         "sample": "",
         "type": "object",
         "required": null,
-        "key": "WFcsyHt",
+        "key": "mMGAnEP",
         "children": [
           {
+            "description": "<p>Binding ID</p>",
+            "name": "binding_id",
+            "sample": "",
+            "type": "string",
+            "required": null,
+            "key": "RtmCJwQ"
+          },
+          {
             "description": "",
-            "name": "model_list",
+            "name": "unbinded_order_list",
             "sample": "",
             "type": "object[]",
             "required": null,
-            "key": "KSMTRCb",
+            "key": "kHJdYZt",
             "children": [
               {
-                "description": "",
-                "name": "model_id",
-                "sample": "600000",
-                "type": "int64",
-                "required": null,
-                "key": "NSXCHtQ"
-              },
-              {
-                "description": "",
-                "name": "is_model_mapped",
-                "sample": "true",
-                "type": "boolean",
-                "required": null,
-                "key": "iPXwPGP"
-              },
-              {
-                "description": "",
-                "name": "is_eligible",
-                "sample": "true",
-                "type": "boolean",
-                "required": null,
-                "key": "yTxrRtS"
-              },
-              {
-                "description": "",
-                "name": "model_toggle_on_status",
-                "sample": "false",
-                "type": "boolean",
-                "required": null,
-                "key": "kAJjxkr"
-              },
-              {
-                "description": "",
-                "name": "last_updated_time",
-                "sample": "2026-01-19",
+                "description": "<p>Shopee's unique identifier for an order.</p>",
+                "name": "order_sn",
+                "sample": "",
                 "type": "string",
                 "required": null,
-                "key": "cYMRNZw"
-              }
-            ]
-          },
-          {
-            "description": "",
-            "name": "page_info",
-            "sample": "",
-            "type": "object",
-            "required": null,
-            "key": "XzhrkhX",
-            "children": [
-              {
-                "description": "",
-                "name": "offset",
-                "sample": "0",
-                "type": "int32",
-                "required": null,
-                "key": "kwExsFe"
+                "key": "MMWRTQm"
               },
               {
-                "description": "",
-                "name": "limit",
-                "sample": "100",
-                "type": "int32",
+                "description": "<p>Shopee's unique identifier for the package under an order.</p>",
+                "name": "package_number",
+                "sample": "",
+                "type": "string",
                 "required": null,
-                "key": "kCfaQrH"
-              },
-              {
-                "description": "",
-                "name": "total_count",
-                "sample": "1",
-                "type": "int32",
-                "required": null,
-                "key": "dEPGMKJ"
+                "key": "JTiSxKS"
               }
             ]
-          },
-          {
-            "description": "",
-            "name": "shop_id",
-            "sample": "600000",
-            "type": "int64",
-            "required": null,
-            "key": "MdjwzSJ"
           }
         ]
       }
     ]
   },
-  "perm_mtime": 1789627786,
-  "perm_operator": "guanlin.ma@shopee.com",
+  "perm_mtime": 1793348303,
+  "perm_operator": "junji.yao@shopee.com",
   "perm_type": 1,
   "perm_upload_file_name": "",
-  "priority": 80737,
+  "priority": 80743,
   "rate_limit": "",
-  "request_sample": [],
+  "request_sample": [
+    {
+      "type": "Payload",
+      "value": {
+        "binding_id": "DCN247547439397PU"
+      }
+    },
+    {
+      "type": "Java",
+      "value": "Unirest.setTimeouts(0, 0);\nHttpResponse<String> response = Unirest.post(\"https://partner.shopeemobile.com/api/v2/first_mile/cancel_courier_delivery_first_mile_tracking_number?access_token=access_token&partner_id=partner_id&shop_id=shop_id&sign=sign&timestamp=timestamp\")\n.header(\"Content-Type\",\"application/json\")\n.body(\"{\n   \\\"binding_id\\\": \\\"DCN247547439397PU\\\"\n}\")\n.asString();"
+    },
+    {
+      "type": "PHP",
+      "value": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, array(\n  CURLOPT_URL => 'https://partner.shopeemobile.com/api/v2/first_mile/cancel_courier_delivery_first_mile_tracking_number?access_token=access_token&partner_id=partner_id&shop_id=shop_id&sign=sign&timestamp=timestamp',\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => '',\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 0,\n  CURLOPT_FOLLOWLOCATION => true,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => 'POST',\n  CURLOPT_POSTFIELDS => '{\n    \"binding_id\": \"DCN247547439397PU\"\n}',\n  CURLOPT_HTTPHEADER => array(\n    'Content-Type: application/json'\n  ),\n));\n\n$response = curl_exec($curl);\n\ncurl_close($curl);\necho $response;\n"
+    },
+    {
+      "type": "cURL",
+      "value": "curl --location --request POST 'https://partner.shopeemobile.com/api/v2/first_mile/cancel_courier_delivery_first_mile_tracking_number?access_token=access_token&partner_id=partner_id&shop_id=shop_id&sign=sign&timestamp=timestamp' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n   \"binding_id\": \"DCN247547439397PU\"\n}'\n"
+    },
+    {
+      "type": "Python",
+      "value": "import requests\nimport json\n\nurl = \"https://partner.shopeemobile.com/api/v2/first_mile/cancel_courier_delivery_first_mile_tracking_number?access_token=access_token&partner_id=partner_id&shop_id=shop_id&sign=sign&timestamp=timestamp\"\n\npayload=json.dumps({\n  \"binding_id\": \"DCN247547439397PU\"\n})\nheaders = {\n  'Content-Type': 'application/json'\n}\nresponse = requests.RPCRequest(\"POST\",url,headers=headers, data=payload, allow_redirects=False)\n\nprint(response.text)\n"
+    }
+  ],
   "response_sample": [
     {
       "type": "JSON",
       "value": {
-        "error": "error_param",
-        "message": "Invalid request parameters.",
-        "request_id": "b6b2c7a0f4d84f7f9a3f58c0d2e2f031",
+        "error": "-",
+        "message": "-",
+        "request_id": "-",
         "response": {
-          "model_list": [
+          "binding_id": "-",
+          "unbinded_order_list": [
             {
-              "model_id": 600000,
-              "is_model_mapped": true,
-              "is_eligible": true,
-              "model_toggle_on_status": false,
-              "last_updated_time": "2026-01-19"
+              "order_sn": "-",
+              "package_number": "-"
             }
-          ],
-          "page_info": {
-            "offset": 0,
-            "limit": 100,
-            "total_count": 1
-          },
-          "shop_id": 600000
+          ]
         }
       }
     }
   ],
   "status": 1,
   "tag": "",
-  "test_url": "https://partner.test-stable.shopeemobile.com/api/v2/buybox/get_buybox_models_by_shop_id",
+  "test_url": "https://partner.test-stable.shopeemobile.com/api/v2/first_mile/cancel_courier_delivery_first_mile_tracking_number",
   "update_log_list": [
     {
-      "date": "2026-09-17",
+      "date": "2026-10-23",
       "content": "New API"
     }
   ],
-  "url": "https://partner.shopeemobile.com/api/v2/buybox/get_buybox_models_by_shop_id",
+  "url": "https://partner.shopeemobile.com/api/v2/first_mile/cancel_courier_delivery_first_mile_tracking_number",
   "version": "",
   "error_example": [
     {
       "type": "JSON",
       "value": {
-        "error": "error_param",
-        "message": "Invalid request parameters.",
-        "response": {},
-        "request_id": "b6b2c7a0f4d84f7f9a3f58c0d2e2f031"
+        "error": "common.error_param",
+        "message": "Wrong parameters, detail: binding_id field is required.",
+        "response": {
+          "binding_id": null,
+          "unbinded_order_list": null
+        },
+        "request_id": "a1b2c3d4e5f6..."
       }
     }
   ],
   "api_permission": [
     "ERP System",
     "Seller In House System",
-    "Product Management"
+    "Order Management"
   ],
-  "path": "/api/v2/buybox/get_buybox_models_by_shop_id",
+  "path": "/api/v2/first_mile/cancel_courier_delivery_first_mile_tracking_number",
   "related_documents": {
     "developer_guides": [],
     "faqs": []

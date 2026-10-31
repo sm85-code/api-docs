@@ -149,6 +149,7 @@ describe("OrderManager (Generated Tests)", () => {
           document_type: 1,
           file_type: 123,
           document_status: 123,
+          cnpj: '"00.000.000/0000-00"',
         },
       };
       const exampleResponse = {
@@ -590,6 +591,7 @@ describe("OrderManager (Generated Tests)", () => {
                 cancelled_qty: 123,
                 return_requested_qty: 123,
                 returned_qty: 123,
+                imei_list: ["test_string"],
               },
             ],
             pay_time: 1607930885,
@@ -793,6 +795,7 @@ describe("OrderManager (Generated Tests)", () => {
                 error_in_fetching_is_prescription_item: true,
                 prescription_check_status: 123,
                 prescription_reject_reason: "test_string",
+                imei_list: ["test_string"],
               },
             ],
             recipient_address: {
@@ -847,6 +850,8 @@ describe("OrderManager (Generated Tests)", () => {
               status: "test_string",
               pending_reason: "test_string",
             },
+            latest_pickup_time_change_source: "seller",
+            pickup_time: 1772276400,
           },
         ],
       };
